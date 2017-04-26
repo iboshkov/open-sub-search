@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.9
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenSubSearch", "OpenSubSearch\OpenSubSearch.csproj", "{E093DAC8-7DAD-4667-9720-799B925BF291}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenSubSearchCLI", "OpenSubSearchCLI\OpenSubSearchCLI.csproj", "{3F3003AB-FFB4-4FC2-B170-2BDAE92ADEAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenSubSarchLib", "OpenSubSarchLib\OpenSubSarchLib.csproj", "{BFF759AB-08E0-437B-9BC4-AF558B5D4B21}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E093DAC8-7DAD-4667-9720-799B925BF291}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E093DAC8-7DAD-4667-9720-799B925BF291}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E093DAC8-7DAD-4667-9720-799B925BF291}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E093DAC8-7DAD-4667-9720-799B925BF291}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F3003AB-FFB4-4FC2-B170-2BDAE92ADEAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F3003AB-FFB4-4FC2-B170-2BDAE92ADEAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F3003AB-FFB4-4FC2-B170-2BDAE92ADEAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F3003AB-FFB4-4FC2-B170-2BDAE92ADEAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFF759AB-08E0-437B-9BC4-AF558B5D4B21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFF759AB-08E0-437B-9BC4-AF558B5D4B21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFF759AB-08E0-437B-9BC4-AF558B5D4B21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFF759AB-08E0-437B-9BC4-AF558B5D4B21}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
