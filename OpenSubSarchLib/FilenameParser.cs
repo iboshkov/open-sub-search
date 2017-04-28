@@ -19,7 +19,7 @@ namespace OpenSubSearchLib
             {"resolution", "([0-9]{3,4}p)"},
             {
                 "quality",
-                "((?:PPV\\.)?[HP]DTV|(?:HD)?CAM|B[DR]Rip|(?:HD-?)?TS|(?:PPV )?WEB-?DL(?: DVDRip)?|HDRip|DVDRip|DVDRIP|CamRip|W[EB]BRip|BluRay|DvDScr|hdtv|telesync)"
+                "((?:PPV\\.)?[HP]DTV|(?:HD)?CAM|B[DR]Rip|(?:HD-?)(TS)|(?:PPV )?WEB-?DL(?: DVDRip)?|HDRip|DVDRip|DVDRIP|CamRip|W[EB]BRip|BluRay|DvDScr|hdtv|telesync)"
             },
             {"codec", "(xvid|[hx]\\.?26[45])"},
             {"audio", "(MP3|DD5\\.?1|Dual[\\- ]Audio|LiNE|DTS|AAC[.-]LC|AAC(?:\\.?2\\.0)?|AC3(?:\\.5\\.1)?)"},
@@ -111,10 +111,14 @@ namespace OpenSubSearchLib
 
                 var clean_idx = groups.Count - 1;
                 var raw_idx = 0;
+                if (key == "quality" && groups.Count > 2)
+                {
+                    clean_idx -= 1;
+                }
+
                 raw = groups[raw_idx].ToString();
                 clean = groups[clean_idx].ToString();
-
-
+   
                 if (key == "group")
                 {
                     MatchCollection codec_matches = Regex.Matches(clean, patterns["codec"], RegexOptions.IgnoreCase);
@@ -154,7 +158,7 @@ namespace OpenSubSearchLib
             clean = Regex.Replace(clean, "([\\[\\(_]|- )$", "").Trim();
 
             part("title", null, raw, clean, -1, -1);
-
+            Console.WriteLine($"{excess_raw}");
             //            clean = Regex.Replace(excess_raw, "(^[-\\. ()]+)|([-\\. ]+$)", "");
             //            clean = Regex.Replace(clean, "[\\(\\)\\/]", " ");
             // TODO: The rest.

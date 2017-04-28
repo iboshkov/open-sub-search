@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenSubSearch", "OpenSubSearch\OpenSubSearch.csproj", "{E093DAC8-7DAD-4667-9720-799B925BF291}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BFF759AB-08E0-437B-9BC4-AF558B5D4B21} = {BFF759AB-08E0-437B-9BC4-AF558B5D4B21}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenSubSearchCLI", "OpenSubSearchCLI\OpenSubSearchCLI.csproj", "{3F3003AB-FFB4-4FC2-B170-2BDAE92ADEAB}"
 EndProject

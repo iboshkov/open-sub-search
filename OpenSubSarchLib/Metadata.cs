@@ -8,8 +8,9 @@ namespace OpenSubSearchLib
         public String input;
 
         public String title;
-        public Int32 season;
-        public Int32 episode;
+        public int? season;
+        public int? episode;
+        public int? year;
         public String quality;
         public String resolution;
         public String group;
@@ -72,9 +73,15 @@ namespace OpenSubSearchLib
         public void _fromDictionary(Dictionary<String, String> dict)
         {
             _sourceDict = dict;
-
-            tryParseInt(dict, "season", out season);
-            tryParseInt(dict, "episode", out episode);
+            int season = -1;
+            bool valid = tryParseInt(dict, "season", out season);
+            if (valid) this.season = season;
+            int episode = -1;
+            valid = tryParseInt(dict, "episode", out episode);
+            if (valid) this.episode = episode;
+            int year = -1;
+            valid = tryParseInt(dict, "year", out year);
+            if (valid) this.year = year;
             setIfExists(dict, "title", out title);
             setIfExists(dict, "quality", out quality);
             setIfExists(dict, "group", out group);
