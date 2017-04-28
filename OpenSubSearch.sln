@@ -10,7 +10,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenSubSearch", "OpenSubSea
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenSubSearchCLI", "OpenSubSearchCLI\OpenSubSearchCLI.csproj", "{3F3003AB-FFB4-4FC2-B170-2BDAE92ADEAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenSubSarchLib", "OpenSubSarchLib\OpenSubSarchLib.csproj", "{BFF759AB-08E0-437B-9BC4-AF558B5D4B21}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenSubSearchLib", "OpenSubSearchLib\OpenSubSearchLib.csproj", "{BFF759AB-08E0-437B-9BC4-AF558B5D4B21}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

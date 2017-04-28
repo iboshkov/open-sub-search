@@ -79,9 +79,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OpenSubSarchLib\OpenSubSarchLib.csproj">
+    <ProjectReference Include="..\OpenSubSearchLib\OpenSubSearchLib.csproj">
       <Project>{bff759ab-08e0-437b-9bc4-af558b5d4b21}</Project>
-      <Name>OpenSubSarchLib</Name>
+      <Name>OpenSubSearchLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

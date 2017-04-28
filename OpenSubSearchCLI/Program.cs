@@ -11,7 +11,7 @@ namespace OpenSubSearchCLI
     {
         static void Main(string[] args)
         {
-            FilenameParser parser = new FilenameParser("Fifty.Shades.Darker.2017.UNRATED.1080p.WEB-DL.DD5.1.H264-FGT");
+            FilenameParser parser = new FilenameParser("");
             Console.WriteLine(parser.parse());
             Console.ReadKey();
         }

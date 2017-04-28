@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using OpenSubSarchLib;
 using OpenSubSearchLib;
 
 namespace OpenSubSearch
@@ -197,8 +196,6 @@ namespace OpenSubSearch
         private void download_Click(object sender, EventArgs e)
         {
             var sub = listView1.SelectedItems[0].Tag as Subtitle;
-            MessageBox.Show(this, sub.downloadLink.ToString());
-
             Process.Start(sub.downloadLink.ToString());
         }
 

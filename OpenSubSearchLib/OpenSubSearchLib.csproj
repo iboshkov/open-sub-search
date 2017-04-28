@@ -48,10 +48,12 @@
   <ItemGroup>
     <Compile Include="FilenameParser.cs" />
     <Compile Include="HashUtils.cs" />
+    <Compile Include="ISubService.cs" />
     <Compile Include="Metadata.cs" />
     <Compile Include="OSDBService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ISubService.cs" />
+    <Compile Include="SubDataTypes.cs" />
+    <Compile Include="SubServiceFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
