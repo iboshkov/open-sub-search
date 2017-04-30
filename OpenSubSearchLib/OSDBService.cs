@@ -11,9 +11,10 @@ namespace OpenSubSearchLib
     {
         IAnonymousClient client;
 
-        public OSDBService()
+        public OSDBService(string clientVersionStr = "")
         {
-            client = Osdb.Login("en", "opensubsearch");
+
+            client = Osdb.Login("en", "opensubsearch v0.1 " + clientVersionStr);
         }
 
         public String serviceId()
@@ -34,6 +35,21 @@ namespace OpenSubSearchLib
                 id_iso639 = lang.ISO639,
                 service_id = lang.SubLanguageID
             }).ToList();
+        }
+
+        public async Task<IList<Subtitle>> searchSubtitlesFromFileAsync(string languages, string filePath)
+        {
+            return await Task.Run(() => searchSubtitlesFromFile(languages, filePath));
+        }
+
+        public async Task<IList<Subtitle>> searchSubtitlesFromQueryAsync(string languages, string query, int? season = null, int? episode = null)
+        {
+            return await Task.Run(() => searchSubtitlesFromQuery(languages, query, season, episode));
+        }
+
+        public async Task<IList<Language>> getAvailableLanguagesAsync()
+        {
+            return await Task.Run(() => getAvailableLanguages());
         }
 
         IList<Subtitle> remapList(IList<OSDBnet.Subtitle> input)

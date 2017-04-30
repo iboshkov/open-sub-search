@@ -8,10 +8,10 @@ namespace OpenSubSearchLib
     {
         private Dictionary<String, ISubService> svcMap;
 
-        public SubServiceFactory()
+        public SubServiceFactory(string clientVersionStr = "")
         {
             svcMap = new Dictionary<string, ISubService>();
-            OSDBService svc = new OSDBService();
+            OSDBService svc = new OSDBService(clientVersionStr);
             svcMap[svc.serviceId()] = svc;
         }
 

@@ -1,0 +1,127 @@
+﻿<Controls:MetroWindow x:Class="OpenSubSearchWPF.MainWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      WindowStartupLocation="CenterScreen"
+                      GlowBrush="{DynamicResource AccentColorBrush}"
+                      xmlns:iconPacks="using:MahApps.Metro.IconPacks"
+                      AllowDrop="True"
+                      xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns:local="clr-namespace:OpenSubSearchWPF"
+                      xmlns:iconPacks1="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                      mc:Ignorable="d"
+                      Title="Open Sub Search" Height="640" Width="450" HorizontalContentAlignment="Stretch"
+                      VerticalContentAlignment="Stretch" Loaded="Window_Loaded" DragEnter="MetroWindow_DragEnter"
+                      Drop="MetroWindow_Drop" DragOver="MetroWindow__ClearDragEffects"
+                      DragLeave="MetroWindow__ClearDragEffects">
+    <Window.Resources>
+        <local:FilenameFromPath x:Key="FilenameFromPath" />
+        <local:NullBoolConverter x:Key="NullBoolConverter" /> 
+    </Window.Resources>
+    <Controls:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <iconPacks1:PackIconModern Width="{TemplateBinding Width}"
+                                      Height="{TemplateBinding Height}"
+                                      Margin="4"
+                                      Foreground="{DynamicResource IdealForegroundColorBrush}"
+                                      Kind="Box" />
+        </DataTemplate>
+    </Controls:MetroWindow.IconTemplate>
+
+    <Controls:MetroWindow.Flyouts>
+        <Controls:FlyoutsControl>
+            <Controls:Flyout Foreground="White" Background="#333333" Theme="Dark" x:Name="subtitleInfoFlyout" Position="Bottom" Height="250">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock TextWrapping="WrapWithOverflow" Grid.Row="0" Text="{Binding selectedSubtitle.fileName}" />
+                    <TextBlock TextWrapping="WrapWithOverflow" Grid.Row="1" Text="{Binding selectedSubtitle.languageName}" />
+                    <TextBlock TextWrapping="WrapWithOverflow" Grid.Row="2" Text="{Binding selectedSubtitle.downloadLink}" />
+                    <Grid Margin="0, 20, 20, 10" Grid.Row="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="45" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock TextWrapping="WrapWithOverflow" FontSize="14" FontFamily="Roboto Light" Grid.Column="0" Text="Click the button on the right to download your subtitle." VerticalAlignment="Center"/>
+
+                        <Button Grid.Column="1" 
+                                FontFamily="Segoe UI Symbol"
+                                FontSize="32"
+                                Height="42"
+                                Width="42"
+                                Click="Download_Clicked"
+                                HorizontalAlignment="Right"
+                                Foreground="White"
+                                Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}">
+                            <iconPacks1:PackIconModern Kind="Download" />
+                        </Button>
+                    </Grid>
+
+                </Grid>
+            </Controls:Flyout>
+        </Controls:FlyoutsControl>
+    </Controls:MetroWindow.Flyouts>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="56" />
+            <RowDefinition Height="24" />
+            <RowDefinition Height="21"/>
+            <RowDefinition Height="75" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBox Text="{Binding query, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 Controls:TextBoxHelper.Watermark="Search..." Controls:TextBoxHelper.ClearTextButton="True"
+                 Grid.Column="0" x:Name="queryTB" Height="56" VerticalAlignment="Top"
+                 HorizontalContentAlignment="Stretch" FontSize="36" FontFamily="Roboto Light" Grid.Row="0"
+                 TextChanged="queryTB_TextInput" />
+
+        <ComboBox SelectedItem="{Binding selectedLanguage}" FontSize="14" ItemsSource="{Binding languages}" x:Name="languagesCB"
+                  HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="45" IsEnabled="False" MinHeight="45"
+                  Grid.Row="1" FontFamily="Roboto Light" Grid.RowSpan="2" />
+        <Controls:TransitioningContentControl Grid.Row="4" x:Name="transitioner"  Height="25">
+        </Controls:TransitioningContentControl>
+
+
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="150" />
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0" Content="{Binding activeFilePath, Mode=TwoWay, Converter={StaticResource FilenameFromPath}}" VerticalAlignment="Center"/>
+            <Button Grid.Column="1" IsEnabled="{Binding canSearchByHash}" Content="Search by Hash" Height="40" Width="100" HorizontalAlignment="Right" Margin="0, 0, 20, 0" Click="SearchHash_Click" />
+        </Grid>
+
+        <ListView SelectionMode="Single" SelectedItem="{Binding selectedSubtitle}"  ItemsSource="{Binding subtitles}" x:Name="subtitleLV" Grid.Row="5" HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" SelectionChanged="subtitleLV_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Language">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock VerticalAlignment="Center" FontFamily="Roboto Light" FontSize="16"
+                                           Padding="10, 22, 10, 22" Text="{Binding languageName}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="File Name">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock VerticalAlignment="Center" FontFamily="Roboto Light" FontSize="16"
+                                           Padding="10, 22, 10, 22" Text="{Binding fileName}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Controls:MetroWindow>
