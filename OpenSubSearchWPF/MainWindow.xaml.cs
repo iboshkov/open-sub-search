@@ -76,7 +76,13 @@ namespace OpenSubSearchWPF
             searchTimer.Stop();
             var query = vm.query;
             if (query.Trim().Length == 0)
+            {
+                vm.subtitles = new List<Subtitle>();
+                vm.lastSearchType = SearchType.ST_NONE;
+                vm.isWorking = false;
                 return;
+
+            }
 
             vm.isWorking = true;
             if (debug)

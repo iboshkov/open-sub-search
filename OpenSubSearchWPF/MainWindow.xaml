@@ -11,6 +11,8 @@
                       xmlns:local="clr-namespace:OpenSubSearchWPF"
                       xmlns:iconPacks1="http://metro.mahapps.com/winfx/xaml/iconpacks"
                       mc:Ignorable="d"
+                      ShowIconOnTitleBar="False"
+                      Icon="Resources/logo_raster_Ck3_icon.ico"
                       Title="Open Sub Search" Height="700" Width="450" HorizontalContentAlignment="Stretch"
                       VerticalContentAlignment="Stretch" Loaded="Window_Loaded" DragEnter="MetroWindow_DragEnter"
                       Drop="MetroWindow_Drop" DragOver="MetroWindow__ClearDragEffects"
@@ -33,23 +35,21 @@
             <Button Click="Author_Click">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Margin="4 0 5 0"
-                               VerticalAlignment="Center">Made with </TextBlock>
+                               VerticalAlignment="Center">
+                        Made with
+                    </TextBlock>
                     <Rectangle Width="20"
-                   Height="20"
-                   Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                               Height="20"
+                               Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
                         <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_heart}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                     <TextBlock Margin="4 0 0 0"
-                   VerticalAlignment="Center"
-                   Text=" by iboshkov" />
+                               VerticalAlignment="Center"
+                               Text=" by iboshkov" />
                 </StackPanel>
             </Button>
-        </Controls:WindowCommands>
-    </Controls:MetroWindow.RightWindowCommands>
-    <Controls:MetroWindow.LeftWindowCommands>
-        <Controls:WindowCommands>
             <Button Click="AppGithub_Click">
                 <Rectangle Width="20"
                            Height="20"
@@ -59,6 +59,18 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>
+    <Controls:MetroWindow.LeftWindowCommands>
+        <Controls:WindowCommands>
+            <Rectangle
+                Margin="5, 0, 0, 0"
+                Width="20"
+                Height="20">
+                <Rectangle.Fill>
+                    <VisualBrush Stretch="Fill" Visual="{StaticResource open_sub_logo}" />
+                </Rectangle.Fill>
+            </Rectangle>
         </Controls:WindowCommands>
     </Controls:MetroWindow.LeftWindowCommands>
     <Controls:MetroWindow.Flyouts>
@@ -93,24 +105,26 @@
                                    Text="{Binding selectedSubtitle.fileName, StringFormat=Filename: {0}}" />
 
                         <StackPanel Grid.Row="4" Orientation="Horizontal">
-                            <TextBlock Text="Source: "/>
+                            <TextBlock Text="Source: " />
                             <TextBlock>
-                                    <Hyperlink RequestNavigate="Hyperlink_OnRequestNavigate" NavigateUri="{Binding selectedSubtitle.pageLink}">
-                                        <Hyperlink.Style>
-                                            <Style TargetType="Hyperlink"
-                                                   BasedOn="{StaticResource {x:Type Hyperlink}}">
-                                                <Setter Property="Foreground" Value="White"/>
-                                                <Style.Triggers>
-                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter Property="Foreground" Value="{StaticResource AccentColorBrush}" />
-                                                    </Trigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Hyperlink.Style>
-    
-                                        <TextBlock TextWrapping="WrapWithOverflow"
-                                                   Text="{Binding selectedSubtitle.sourceName}" />
-                                    </Hyperlink>
+                                <Hyperlink RequestNavigate="Hyperlink_OnRequestNavigate"
+                                           NavigateUri="{Binding selectedSubtitle.pageLink}">
+                                    <Hyperlink.Style>
+                                        <Style TargetType="Hyperlink"
+                                               BasedOn="{StaticResource {x:Type Hyperlink}}">
+                                            <Setter Property="Foreground" Value="White" />
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Foreground"
+                                                            Value="{StaticResource AccentColorBrush}" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Hyperlink.Style>
+
+                                    <TextBlock TextWrapping="WrapWithOverflow"
+                                               Text="{Binding selectedSubtitle.sourceName}" />
+                                </Hyperlink>
                             </TextBlock>
                         </StackPanel>
 
