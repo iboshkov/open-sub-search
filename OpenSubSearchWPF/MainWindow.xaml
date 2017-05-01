@@ -11,46 +11,123 @@
                       xmlns:local="clr-namespace:OpenSubSearchWPF"
                       xmlns:iconPacks1="http://metro.mahapps.com/winfx/xaml/iconpacks"
                       mc:Ignorable="d"
-                      Title="Open Sub Search" Height="640" Width="450" HorizontalContentAlignment="Stretch"
+                      Title="Open Sub Search" Height="700" Width="450" HorizontalContentAlignment="Stretch"
                       VerticalContentAlignment="Stretch" Loaded="Window_Loaded" DragEnter="MetroWindow_DragEnter"
                       Drop="MetroWindow_Drop" DragOver="MetroWindow__ClearDragEffects"
                       DragLeave="MetroWindow__ClearDragEffects">
     <Window.Resources>
         <local:FilenameFromPath x:Key="FilenameFromPath" />
-        <local:NullBoolConverter x:Key="NullBoolConverter" /> 
+        <local:NullBoolConverter x:Key="NullBoolConverter" />
     </Window.Resources>
     <Controls:MetroWindow.IconTemplate>
         <DataTemplate>
             <iconPacks1:PackIconModern Width="{TemplateBinding Width}"
-                                      Height="{TemplateBinding Height}"
-                                      Margin="4"
-                                      Foreground="{DynamicResource IdealForegroundColorBrush}"
-                                      Kind="Box" />
+                                       Height="{TemplateBinding Height}"
+                                       Margin="4"
+                                       Foreground="{DynamicResource IdealForegroundColorBrush}"
+                                       Kind="Box" />
         </DataTemplate>
     </Controls:MetroWindow.IconTemplate>
-
+    <Controls:MetroWindow.RightWindowCommands>
+        <Controls:WindowCommands>
+            <Button Click="Author_Click">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Margin="4 0 5 0"
+                               VerticalAlignment="Center">Made with </TextBlock>
+                    <Rectangle Width="20"
+                   Height="20"
+                   Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_heart}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                    <TextBlock Margin="4 0 0 0"
+                   VerticalAlignment="Center"
+                   Text=" by iboshkov" />
+                </StackPanel>
+            </Button>
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>
+    <Controls:MetroWindow.LeftWindowCommands>
+        <Controls:WindowCommands>
+            <Button Click="AppGithub_Click">
+                <Rectangle Width="20"
+                           Height="20"
+                           Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_github}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.LeftWindowCommands>
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>
-            <Controls:Flyout Foreground="White" Background="#333333" Theme="Dark" x:Name="subtitleInfoFlyout" Position="Bottom" Height="250">
+            <Controls:Flyout HeaderTemplate="{StaticResource CustomHeaderTemplate}" TitleVisibility="Collapsed"
+                             Foreground="White" Background="#CC333333" IsOpen="False" Theme="Inverse"
+                             x:Name="subtitleInfoFlyout" Position="Bottom" Height="200">
                 <Grid Margin="10">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="75" />
                     </Grid.RowDefinitions>
-                    <TextBlock TextWrapping="WrapWithOverflow" Grid.Row="0" Text="{Binding selectedSubtitle.fileName}" />
-                    <TextBlock TextWrapping="WrapWithOverflow" Grid.Row="1" Text="{Binding selectedSubtitle.languageName}" />
-                    <TextBlock TextWrapping="WrapWithOverflow" Grid.Row="2" Text="{Binding selectedSubtitle.downloadLink}" />
-                    <Grid Margin="0, 20, 20, 10" Grid.Row="3">
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" TextWrapping="WrapWithOverflow"
+                                   Text="{Binding selectedSubtitle.title, StringFormat=Title: {0}}" />
+                        <TextBlock Grid.Row="1" TextWrapping="WrapWithOverflow"
+                                   Text="{Binding selectedSubtitle.languageName, StringFormat=Language: {0}}" />
+                        <TextBlock Grid.Row="2" TextWrapping="WrapWithOverflow"
+                                   Text="{Binding selectedSubtitle.year, StringFormat=Year: {0}}" />
+                        <TextBlock Grid.Row="3" TextWrapping="WrapWithOverflow"
+                                   Text="{Binding selectedSubtitle.fileName, StringFormat=Filename: {0}}" />
+
+                        <StackPanel Grid.Row="4" Orientation="Horizontal">
+                            <TextBlock Text="Source: "/>
+                            <TextBlock>
+                                    <Hyperlink RequestNavigate="Hyperlink_OnRequestNavigate" NavigateUri="{Binding selectedSubtitle.pageLink}">
+                                        <Hyperlink.Style>
+                                            <Style TargetType="Hyperlink"
+                                                   BasedOn="{StaticResource {x:Type Hyperlink}}">
+                                                <Setter Property="Foreground" Value="White"/>
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Foreground" Value="{StaticResource AccentColorBrush}" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Hyperlink.Style>
+    
+                                        <TextBlock TextWrapping="WrapWithOverflow"
+                                                   Text="{Binding selectedSubtitle.sourceName}" />
+                                    </Hyperlink>
+                            </TextBlock>
+                        </StackPanel>
+
+                    </Grid>
+                    <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="45" />
+                            <ColumnDefinition Width="45" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock TextWrapping="WrapWithOverflow" FontSize="14" FontFamily="Roboto Light" Grid.Column="0" Text="Click the button on the right to download your subtitle." VerticalAlignment="Center"/>
+                        <TextBlock TextWrapping="WrapWithOverflow" FontSize="14"
+                                   FontFamily="{StaticResource DefaultFont}" Grid.Column="0"
+                                   Text="{Binding downloadMessage}"
+                                   VerticalAlignment="Center" />
 
-                        <Button Grid.Column="1" 
+                        <Button Grid.Column="1"
                                 FontFamily="Segoe UI Symbol"
                                 FontSize="32"
                                 Height="42"
@@ -58,8 +135,24 @@
                                 Click="Download_Clicked"
                                 HorizontalAlignment="Right"
                                 Foreground="White"
+                                IsEnabled="{Binding activeFilePath, Converter={StaticResource NullBoolConverter}, ConverterParameter=1}"
+                                MouseEnter="Download_MouseEnter"
+                                MouseLeave="ClearDownloadMessage"
                                 Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}">
                             <iconPacks1:PackIconModern Kind="Download" />
+                        </Button>
+                        <Button Grid.Column="2"
+                                FontFamily="Segoe UI Symbol"
+                                FontSize="32"
+                                Height="42"
+                                Width="42"
+                                Click="Save_As_Clicked"
+                                HorizontalAlignment="Right"
+                                Foreground="White"
+                                MouseLeave="ClearDownloadMessage"
+                                MouseEnter="Save_As_MouseEnter"
+                                Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}">
+                            <iconPacks1:PackIconModern Kind="DiskDownload" />
                         </Button>
                     </Grid>
 
@@ -72,7 +165,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="56" />
             <RowDefinition Height="24" />
-            <RowDefinition Height="21"/>
+            <RowDefinition Height="21" />
             <RowDefinition Height="75" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -80,14 +173,15 @@
         <TextBox Text="{Binding query, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  Controls:TextBoxHelper.Watermark="Search..." Controls:TextBoxHelper.ClearTextButton="True"
                  Grid.Column="0" x:Name="queryTB" Height="56" VerticalAlignment="Top"
-                 HorizontalContentAlignment="Stretch" FontSize="36" FontFamily="Roboto Light" Grid.Row="0"
+                 HorizontalContentAlignment="Stretch" FontSize="36" FontFamily="{StaticResource DefaultFont}"
+                 Grid.Row="0"
                  TextChanged="queryTB_TextInput" />
 
-        <ComboBox SelectedItem="{Binding selectedLanguage}" FontSize="14" ItemsSource="{Binding languages}" x:Name="languagesCB"
+        <ComboBox SelectedItem="{Binding selectedLanguage}" FontSize="14" ItemsSource="{Binding languages}"
+                  x:Name="languagesCB"
                   HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="45" IsEnabled="False" MinHeight="45"
-                  Grid.Row="1" FontFamily="Roboto Light" Grid.RowSpan="2" />
-        <Controls:TransitioningContentControl Grid.Row="4" x:Name="transitioner"  Height="25">
-        </Controls:TransitioningContentControl>
+                  Grid.Row="1" FontFamily="{StaticResource DefaultFont}" Grid.RowSpan="2" />
+        <Controls:TransitioningContentControl Grid.Row="4" x:Name="transitioner" Height="25" />
 
 
         <Grid Grid.Row="3">
@@ -96,18 +190,24 @@
                 <ColumnDefinition Width="150" />
             </Grid.ColumnDefinitions>
 
-            <Label Grid.Column="0" Content="{Binding activeFilePath, Mode=TwoWay, Converter={StaticResource FilenameFromPath}}" VerticalAlignment="Center"/>
-            <Button Grid.Column="1" IsEnabled="{Binding canSearchByHash}" Content="Search by Hash" Height="40" Width="100" HorizontalAlignment="Right" Margin="0, 0, 20, 0" Click="SearchHash_Click" />
+            <Label Grid.Column="0"
+                   Content="{Binding activeFilePath, Mode=TwoWay, Converter={StaticResource FilenameFromPath}}"
+                   VerticalAlignment="Center" />
+            <Button Grid.Column="1" IsEnabled="{Binding canSearchByHash}" Content="Search by Hash" Height="40"
+                    Width="100" HorizontalAlignment="Right" Margin="0, 0, 20, 0" Click="SearchHash_Click" />
         </Grid>
 
-        <ListView SelectionMode="Single" SelectedItem="{Binding selectedSubtitle}"  ItemsSource="{Binding subtitles}" x:Name="subtitleLV" Grid.Row="5" HorizontalAlignment="Stretch"
-                  VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" SelectionChanged="subtitleLV_SelectionChanged">
+        <ListView SelectionMode="Single" SelectedItem="{Binding selectedSubtitle}" ItemsSource="{Binding subtitles}"
+                  x:Name="subtitleLV" Grid.Row="5" HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                  SelectionChanged="subtitleLV_SelectionChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Language">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock VerticalAlignment="Center" FontFamily="Roboto Light" FontSize="16"
+                                <TextBlock VerticalAlignment="Center" FontFamily="{StaticResource DefaultFont}"
+                                           FontSize="16"
                                            Padding="10, 22, 10, 22" Text="{Binding languageName}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
@@ -115,7 +215,8 @@
                     <GridViewColumn Header="File Name">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock VerticalAlignment="Center" FontFamily="Roboto Light" FontSize="16"
+                                <TextBlock VerticalAlignment="Center" FontFamily="{StaticResource DefaultFont}"
+                                           FontSize="16"
                                            Padding="10, 22, 10, 22" Text="{Binding fileName}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

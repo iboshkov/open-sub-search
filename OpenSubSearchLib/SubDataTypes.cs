@@ -18,9 +18,12 @@ namespace OpenSubSearchLib
         public string languageId { get; set; }
         public string languageName { get; set; }
         public string rating { get; set; }
+        public string sourceId { get; set; }
+        public string sourceName { get; set; }
         public string bad { get; set; }
         public Uri downloadLink { get; set; }
         public Uri pageLink { get; set; }
+        public object serviceSubtitle { get; set; }
     }
 
     public class Language

@@ -11,7 +11,6 @@ Open Sub Search is a little side project I did in a few days as part of a projec
 ### Installation
 Just grab a binary release from the [Releases page](https://github.com/iboshkov/open-sub-search/releases)
 
-
 ### How to use:
 - Drag and drop a file into the application window, or use the "Open File" button to select a file to use as reference.
 - Press either **"Search by Name"** or **"Search by Hash"**.
@@ -19,6 +18,17 @@ Just grab a binary release from the [Releases page](https://github.com/iboshkov/
 
 ### Screenshots
 ![Open Sub Search](./screenshot.png "Main View")
+
+## WPF Version
+This is a re-implementation of the frontend for the OpenSubSearchLib and uses WPF instead of the old Windows Forms UI library.
+It looks a lot more modern and provides an overall better user experience.
+
+This is the UI that will undergo continued development. The Windows Forms implementation is a one-off proof of concept.
+
+### Screenshots
+**You can find a video demo on [Streamable](https://streamable.com/92ikt)** 
+
+![Open Sub Search WPF](./screenshot_wpf.png "Main View")
 
 ### License
 MIT (Check LICENSE for more info)

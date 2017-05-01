@@ -23,13 +23,12 @@ namespace OpenSubSearchWPF
         private IList<Subtitle> _subtitles;
         private Metadata _metadata;
         private string _activeFilePath;
+        private string _downloadMessage;
         private string _query;
         private Visibility _loadingVisibility;
         private bool _canSearchByHash;
 
         public SearchType lastSearchType { get; set; } = SearchType.ST_NONE;
-
-
         public Subtitle selectedSubtitle
         {
             get => _selectedSubtitle;
@@ -59,6 +58,15 @@ namespace OpenSubSearchWPF
                 _activeFilePath = value;
                 canSearchByHash = false; // just refresh it;
                 OnPropertyChanged(nameof(activeFilePath));
+            }
+        }
+        public string downloadMessage
+        {
+            get => _downloadMessage;
+            set
+            {
+                _downloadMessage = value;
+                OnPropertyChanged(nameof(downloadMessage));
             }
         }
 

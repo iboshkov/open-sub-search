@@ -8,10 +8,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Navigation;
 using System.Windows.Threading;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using Microsoft.Win32;
 using OpenSubSearchLib;
 
 namespace OpenSubSearchWPF
@@ -38,11 +41,6 @@ namespace OpenSubSearchWPF
             searchTimer.Tick += searchTimer_Tick;
             vm = new ViewModel();
             DataContext = vm;
-            /*
-                         <Controls:MetroProgressBar Visibility="{Binding loadingVisibility}" Height="10" x:Name="progressBar"
-                                       Grid.Row="2" IsIndeterminate="{Binding isWorking}" />
-
-             */
             vm.PropertyChanged += OnPropertyChanged;
             vm.subtitles = new List<Subtitle>();
         }
@@ -75,8 +73,6 @@ namespace OpenSubSearchWPF
 
         private async void searchTimer_Tick(object sender, EventArgs e)
         {
-            Console.WriteLine("Doing query");
-
             searchTimer.Stop();
             var query = vm.query;
             if (query.Trim().Length == 0)
@@ -115,12 +111,10 @@ namespace OpenSubSearchWPF
                 }
             }
             vm.isWorking = false;
-            Console.WriteLine($"Got {vm.subtitles.Count} subs for query '{query}'");
         }
 
         private void queryTB_TextInput(object sender, TextChangedEventArgs e)
         {
-            Console.WriteLine((e.Source as TextBox).Text);
             searchTimer.Stop();
             searchTimer.Start();
         }
@@ -203,7 +197,8 @@ namespace OpenSubSearchWPF
             vm.lastSearchType = SearchType.ST_HASH;
             try
             {
-                vm.subtitles = await service.searchSubtitlesFromFileAsync(vm.selectedLanguage.service_id, vm.activeFilePath);
+                vm.subtitles =
+                    await service.searchSubtitlesFromFileAsync(vm.selectedLanguage.service_id, vm.activeFilePath);
             }
             catch
             {
@@ -214,12 +209,73 @@ namespace OpenSubSearchWPF
 
         private void subtitleLV_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            subtitleInfoFlyout.IsOpen = true; 
+            subtitleInfoFlyout.IsOpen = !vm.isWorking && subtitleLV.SelectedItems.Count > 0;
         }
 
-        private void Download_Clicked(object sender, RoutedEventArgs e)
+        private async void saveFileAsync(string filepath, bool useFilename=false)
         {
-            Process.Start(vm.selectedSubtitle.downloadLink.ToString());
+            vm.isWorking = true;
+            string path = Path.GetDirectoryName(filepath);
+            string name = useFilename ? Path.GetFileName(filepath) : null;
+            try
+            {
+                string result = await service.downloadSubitleToPathAsync(vm.selectedSubtitle, path, name);
+                if (!File.Exists(result))
+                {
+                    throw new Exception("Failed to save downloaded subtitle");
+                }
+                Process.Start("explorer.exe", $"/select, \"{result}\"");
+            }
+            catch
+            {
+                this.ShowMessageAsync("Error", "An error happened while saving subtitle, please try again.");
+            }
+            vm.isWorking = false;
+        }
+
+        private async void Download_Clicked(object sender, RoutedEventArgs e)
+        {
+            saveFileAsync(vm.activeFilePath);
+        }
+
+        private void Save_As_Clicked(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.FileName = Path.GetFileName(vm.selectedSubtitle.fileName);
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                saveFileAsync(saveFileDialog.FileName, true);
+            }
+        }
+
+        private void Hyperlink_OnRequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            Process.Start(e.Uri.ToString());
+        }
+
+        private void ClearDownloadMessage(object sender, MouseEventArgs e)
+        {
+            vm.downloadMessage = "";
+        }
+
+        private void Download_MouseEnter(object sender, MouseEventArgs e)
+        {
+            vm.downloadMessage = "Downloads the subtitle in the directory where your selected file is.";
+        }
+
+        private void Save_As_MouseEnter(object sender, MouseEventArgs e)
+        {
+            vm.downloadMessage = "Lets you choose a download location.";
+        }
+
+        private void AppGithub_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start(OpenSubSearchWPF.Properties.Resources.GithubApp);
+        }
+
+        private void Author_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start(OpenSubSearchWPF.Properties.Resources.AuthorUrl);
         }
     }
 }
