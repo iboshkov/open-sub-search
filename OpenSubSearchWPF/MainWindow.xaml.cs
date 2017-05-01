@@ -48,7 +48,8 @@ namespace OpenSubSearchWPF
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "isWorking")
-                if (vm.isWorking)
+            {
+                 if (vm.isWorking)
                 {
                     transitioner.Content = new MetroProgressBar
                     {
@@ -69,13 +70,18 @@ namespace OpenSubSearchWPF
                         FontFamily = new FontFamily("Roboto Light")
                     };
                 }
+
+            } else if (e.PropertyName == "selectedLanguage")
+            {
+                searchTimer_Tick(null, null);
+            }
         }
 
         private async void searchTimer_Tick(object sender, EventArgs e)
         {
             searchTimer.Stop();
             var query = vm.query;
-            if (query.Trim().Length == 0)
+            if (String.IsNullOrEmpty(query))
             {
                 vm.subtitles = new List<Subtitle>();
                 vm.lastSearchType = SearchType.ST_NONE;
