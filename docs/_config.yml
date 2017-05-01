@@ -1,0 +1,32 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely edit after that. If you find
+# yourself editing this file very often, consider using Jekyll's data files
+# feature for the data you need to update frequently.
+#
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
+
+# Site settings
+# These are used to personalize your new site. If you look in the HTML files,
+# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
+# You can create any custom variable you would like, and they will be accessible
+# in the templates via {{ site.myvariable }}.
+title: Open Sub Search
+author_name: Ilija Boshkov
+author_link: http://boshkov.tech/
+github_page: https://www.github.com/iboshkov/open-sub-search/
+download_link_latest: https://www.github.com/iboshkov/open-sub-search/releases/latest/
+summary: >
+  Open source subtitle search app
+  built by @iboshkov.
+description: > 
+  <p><b>Open Sub Search</b> is a project to make searching for subtitles faster, easier and more convenient.<br/>
+  It's open-source, which means anyone can contribute and keep the project going or add new features </p>
+twitter_username: i_boshkov
+github_username:  iboshkov
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
