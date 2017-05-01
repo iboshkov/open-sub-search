@@ -18,6 +18,7 @@ author_name: Ilija Boshkov
 author_link: http://boshkov.tech/
 github_page: https://www.github.com/iboshkov/open-sub-search/
 download_link_latest: https://www.github.com/iboshkov/open-sub-search/releases/latest/
+base_url: https://iboshkov.github.io/open-sub-search/
 summary: >
   Open source subtitle search app
   built by @iboshkov.
